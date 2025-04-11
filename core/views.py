@@ -3,25 +3,33 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import UploadFileForm
+from .forms import UploadFileForm, CategoryForm, StaffRegisterForm, StaffProfileForm
 from .models import UploadedFile, Category
 from django.db.models import Q
-from .forms import CategoryForm
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # Check if user is staff
 def is_staff(user):
     return user.is_staff
 
-
 def staff_required(user):
     return user.is_authenticated and user.is_staff
-
 
 # Home Page (open to all)
 def home(request):
     return render(request, 'home.html')
 
+def staff_register(request):
+    if request.method == 'POST':
+        form = StaffRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Staff account created! You can now login.')
+            return redirect('login')
+    else:
+        form = StaffRegisterForm()
+    return render(request, 'staff_register.html', {'form': form})
 
 # Login View (staff only)
 def login_view(request):
@@ -36,33 +44,48 @@ def login_view(request):
             messages.error(request, 'Invalid credentials or not a staff member.')
     return render(request, 'login.html')
 
+@login_required
+def staff_profile(request):
+    if request.method == 'POST':
+        form = StaffProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully.")
+            return redirect('staff_profile')
+    else:
+        form = StaffProfileForm(instance=request.user)
+    return render(request, 'staff_profile.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Keeps user logged in
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('staff_profile')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {'form': form})
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        request.user.delete()
+        messages.success(request, "Your account has been deleted.")
+        return redirect('home')  # or login page
 
 # Logout
 def logout_view(request):
     logout(request)
     return redirect('home')
 
-
-# Register Staff (only staff can access)
-@user_passes_test(is_staff)
-def register_staff(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        if User.objects.filter(username=username).exists():
-            messages.error(request, 'Username already exists.')
-        else:
-            User.objects.create_user(username=username, password=password, is_staff=True)
-            messages.success(request, 'New staff user created.')
-    return render(request, 'register.html')
-
-
 # Dashboard (only logged-in staff)
 @login_required
 @user_passes_test(is_staff)
 def dashboard(request):
     return render(request, 'dashboard.html')
-
 
 @login_required
 @user_passes_test(is_staff)
@@ -77,7 +100,6 @@ def upload_file(request):
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form})
-
 
 @login_required
 @user_passes_test(is_staff)
@@ -96,7 +118,6 @@ def file_list(request):
 
     return render(request, 'file_list.html', {'files': files, 'categories': categories})
 
-
 @login_required
 @user_passes_test(staff_required)
 def edit_file(request, file_id):
@@ -107,7 +128,6 @@ def edit_file(request, file_id):
         return redirect('file_list')
     return render(request, 'edit_file.html', {'form': form, 'file': file})
 
-
 @login_required
 @user_passes_test(staff_required)
 def delete_file(request, file_id):
@@ -117,17 +137,11 @@ def delete_file(request, file_id):
         return redirect('file_list')
     return render(request, 'delete_file.html', {'file': file})
 
-
-def staff_required(user):
-    return user.is_authenticated and user.is_staff
-
-
 @login_required
 @user_passes_test(staff_required)
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category_list.html', {'categories': categories})
-
 
 @login_required
 @user_passes_test(staff_required)
@@ -138,7 +152,6 @@ def add_category(request):
         return redirect('category_list')
     return render(request, 'category_form.html', {'form': form, 'title': 'Add Category'})
 
-
 @login_required
 @user_passes_test(staff_required)
 def edit_category(request, category_id):
@@ -148,7 +161,6 @@ def edit_category(request, category_id):
         form.save()
         return redirect('category_list')
     return render(request, 'category_form.html', {'form': form, 'title': 'Edit Category'})
-
 
 @login_required
 @user_passes_test(staff_required)
