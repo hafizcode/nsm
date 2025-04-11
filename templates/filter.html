@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    {% include 'include/head.html' %}
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" id="searchInput" placeholder="Search items..." />
+
+        <div class="filters">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="science">Science</button>
+            <button class="filter-btn" data-filter="math">Math</button>
+            <button class="filter-btn" data-filter="history">History</button>
+        </div>
+
+        <ul id="itemList">
+            <li class="item" data-labels="science math">Physics Notes</li>
+            <li class="item" data-labels="math">Algebra Guide</li>
+            <li class="item" data-labels="history">World War II Overview</li>
+            <li class="item" data-labels="science">Biology Summary</li>
+            <li class="item" data-labels="history science">Scientific Discoveries in History</li>
+        </ul>
+    </div>
+
+    {% include 'include/footer.html' %}
+</body>
+
+</html>
