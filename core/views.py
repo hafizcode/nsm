@@ -24,12 +24,17 @@ def staff_register(request):
     if request.method == 'POST':
         form = StaffRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Staff account created! You can now login.')
-            return redirect('login')
+            user = form.save(commit=False)
+            user.is_staff = True
+            user.email = form.cleaned_data.get('email')
+            user.first_name = form.cleaned_data.get('full_name')  # Saving full_name to first_name
+            user.save()
+            login(request, user)
+            return redirect('dashboard')  # or wherever
     else:
         form = StaffRegisterForm()
     return render(request, 'staff_register.html', {'form': form})
+
 
 # Login View (staff only)
 def login_view(request):
