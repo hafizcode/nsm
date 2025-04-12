@@ -7,3 +7,16 @@ body {
     font-family: "Winky Rough", sans-serif;
     color: #fff;
 }
+
+.container {
+    padding: 20px 0;
+}
+
+form input {
+    width: 100%;
+    margin: 5px 0;
+}
+
+form>button {
+    margin: 10px 0;
+}

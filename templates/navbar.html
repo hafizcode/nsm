@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item"><a class="nav-link" href="{% url 'public_home' %}">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'public_files' %}">Resources</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="{% url 'public_files' %}">Resources</a></li>
         {% if not request.user.is_authenticated %}
         <li class="nav-item"><a class="nav-link" href="{% url 'staff_register' %}">Staff Register</a></li>
-        {% endif %}
+        {% endif %} -->
       </ul>
       <ul class="navbar-nav">
         {% if user.is_authenticated and user.is_staff %}
