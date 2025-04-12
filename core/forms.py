@@ -1,6 +1,5 @@
 from django import forms
-from .models import UploadedFile
-from .models import Category
+from .models import UploadedFile, Category, Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -20,6 +19,10 @@ class StaffRegisterForm(UserCreationForm):
         user.is_staff = True  # Mark user as staff
         if commit:
             user.save()
+            Profile.objects.create(
+                user=user,
+                profile_image=self.cleaned_data.get('profile_image') or 'profile_pics/default.png'
+            )
         return user
 
 

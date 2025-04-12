@@ -22,7 +22,7 @@ def home(request):
 
 def staff_register(request):
     if request.method == 'POST':
-        form = StaffRegisterForm(request.POST)
+        form = StaffRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_staff = True
