@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Profile, UploadedFile, Category
 from .forms import StaffCreationForm, UploadFileForm, CategoryForm, EditStaffForm
+from django.http import FileResponse, Http404
+from django.shortcuts import get_object_or_404
+import os
 
 # Admin Login
 
@@ -79,9 +82,8 @@ def staff_profile(request):
 def staff_dashboard(request):
     files = UploadedFile.objects.filter(uploaded_by=request.user)
     file_count = files.count()
-    download_count = sum(file.file.size for file in files)  # replace with actual download tracking
     return render(request, 'staff/dashboard.html', {
-        'files': files, 'file_count': file_count, 'download_count': download_count
+        'files': files, 'file_count': file_count
     })
 
 @login_required
@@ -134,3 +136,14 @@ def delete_category(request, category_id):
         category.delete()
         return redirect('category_list')
     return render(request, 'staff/delete_category.html', {'category': category})
+
+def download_file(request, file_id):
+    uploaded_file = get_object_or_404(UploadedFile, id=file_id)
+    uploaded_file.download_count += 1
+    uploaded_file.save()
+
+    file_path = uploaded_file.file.path
+    if os.path.exists(file_path):
+        return FileResponse(open(file_path, 'rb'), as_attachment=True)
+    else:
+        raise Http404("File not found.")

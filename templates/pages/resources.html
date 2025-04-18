@@ -12,7 +12,7 @@
                 <strong>{{ file.title }}</strong><br>
                 <small>{{ file.label }} | {{ file.category.name }}</small>
             </div>
-            <span class="badge bg-secondary">Download</span>
+            <a href="{% url 'download_file' file.id %}" class="btn btn-success">Download</a>
         </a>
     {% empty %}
         <p>No files found.</p>
