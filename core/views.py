@@ -93,3 +93,44 @@ def upload_file(request):
         uploaded_file.save()
         return redirect('staff_dashboard')
     return render(request, 'staff/upload_file.html', {'form': form})
+
+
+# List all categories
+@login_required
+def category_list(request):
+    categories = Category.objects.all()
+    return render(request, 'staff/category_list.html', {'categories': categories})
+
+# Add a new category
+@login_required
+def add_category(request):
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+    return render(request, 'staff/add_category.html', {'form': form})
+
+# Edit a category
+@login_required
+def edit_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category)
+    return render(request, 'staff/edit_category.html', {'form': form})
+
+# Delete a category
+@login_required
+def delete_category(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    if request.method == 'POST':
+        category.delete()
+        return redirect('category_list')
+    return render(request, 'staff/delete_category.html', {'category': category})
