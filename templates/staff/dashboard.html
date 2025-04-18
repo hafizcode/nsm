@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Staff Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome, {{ request.user.username }}</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Files Uploaded</h5>
+                <p class="card-text display-6">{{ file_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Downloads</h5>
+                <p class="card-text display-6">{{ total_downloads }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,8 +1,6 @@
 from django.urls import path
-from . import views
-
+from .views import public_resources
 
 urlpatterns = [
-    path('', views.home, name='public_home'),
-    path('resources/', views.public_files, name='public_files'),  # 👈 Add this
+    path('', public_resources, name='public_resources'),
 ]

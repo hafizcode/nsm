@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h3>Profile Details</h3>
+        <p><strong>Username:</strong> {{ request.user.username }}</p>
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <p><strong>Department:</strong> {{ profile.department }}</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="{{ profile.profile_image.url }}" class="img-thumbnail" width="150">
+    </div>
+</div>
+{% endblock %}

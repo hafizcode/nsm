@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Upload File{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/upload.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-4 p-4">
+                <h3 class="text-center mb-4">Upload a New File</h3>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                        {{ form.title.errors }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.label.label_tag }}
+                        {{ form.label }}
+                        {{ form.label.errors }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.file.label_tag }}
+                        {{ form.file }}
+                        {{ form.file.errors }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.category.label_tag }}
+                        {{ form.category }}
+                        {{ form.category.errors }}
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary px-4">Upload</button>
+                        <a href="{% url 'staff_dashboard' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
