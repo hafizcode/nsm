@@ -96,6 +96,35 @@ def upload_file(request):
         return redirect('staff_dashboard')
     return render(request, 'staff/upload_file.html', {'form': form})
 
+@login_required
+def manage_files(request):
+    files = UploadedFile.objects.filter(uploaded_by=request.user)
+    return render(request, 'staff/manage_files.html', {'files': files})
+
+@login_required
+def edit_file(request, file_id):
+    uploaded_file = get_object_or_404(UploadedFile, id=file_id, uploaded_by=request.user)
+
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES, instance=uploaded_file)
+        if form.is_valid():
+            form.save()
+            return redirect('manage_files')
+    else:
+        form = UploadFileForm(instance=uploaded_file)
+
+    return render(request, 'staff/edit_file.html', {'form': form})
+
+@login_required
+def delete_file(request, file_id):
+    uploaded_file = get_object_or_404(UploadedFile, id=file_id, uploaded_by=request.user)
+
+    if request.method == 'POST':
+        uploaded_file.delete()
+        return redirect('manage_files')
+
+    return render(request, 'staff/delete_file.html', {'file': uploaded_file})
+
 
 # List all categories
 @login_required

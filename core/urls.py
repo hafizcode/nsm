@@ -12,6 +12,9 @@ urlpatterns = [
 
     path('staff/dashboard/', views.staff_dashboard, name='staff_dashboard'),
     path('staff/upload/', views.upload_file, name='upload_file'),
+    path('manage-files/', views.manage_files, name='manage_files'),
+    path('files/edit/<int:file_id>/', views.edit_file, name='edit_file'),
+    path('files/delete/<int:file_id>/', views.delete_file, name='delete_file'),
     path('staff/profile/', views.staff_profile, name='staff_profile'),
 
     path('categories/', views.category_list, name='category_list'),
