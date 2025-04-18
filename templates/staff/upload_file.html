@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static widget_tweaks %}
 {% block title %}Upload File{% endblock %}
 
 {% block extra_css %}
@@ -17,27 +17,43 @@
                     {{ form.non_field_errors }}
                     
                     <div class="mb-3">
-                        {{ form.title.label_tag }}
-                        {{ form.title }}
-                        {{ form.title.errors }}
+                        <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">
+                            {{ form.title.label }}
+                        </label>
+                        {{ form.title|add_class:"form-control" }}
+                        {% for error in form.title.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form.label.label_tag }}
-                        {{ form.label }}
-                        {{ form.label.errors }}
+                        <label for="{{ form.label.id_for_label }}" class="form-label fw-bold">
+                            {{ form.label.label }}
+                        </label>
+                        {{ form.label|add_class:"form-control" }}
+                        {% for error in form.label.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form.file.label_tag }}
-                        {{ form.file }}
-                        {{ form.file.errors }}
+                        <label for="{{ form.file.id_for_label }}" class="form-label fw-bold">
+                            {{ form.file.label }}
+                        </label>
+                        {{ form.file|add_class:"form-control" }}
+                        {% for error in form.file.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
 
                     <div class="mb-3">
-                        {{ form.category.label_tag }}
-                        {{ form.category }}
-                        {{ form.category.errors }}
+                        <label for="{{ form.category.id_for_label }}" class="form-label fw-bold">
+                            {{ form.category.label }}
+                        </label>
+                        {{ form.category|add_class:"form-select" }}
+                        {% for error in form.category.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
                     </div>
 
                     <div class="text-end">

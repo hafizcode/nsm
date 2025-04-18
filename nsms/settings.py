@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'pages',
+    'widget_tweaks',  # optional, for form tweaks
     # 'crispy_forms',  # optional, for pretty forms
 ]
 
