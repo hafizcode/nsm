@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h3>Profile Details</h3>
+        <p><strong>Username:</strong> {{ request.user.username }}</p>
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <p><strong>Department:</strong> {{ profile.department }}</p>
+    </div>
+    <div class="col-md-4 text-center">
+        <!-- Staff profile picture -->
+        <img src="{% if user.profile.profile_image %}
+             {{ user.profile.profile_image.url }}
+         {% else %}
+             {% static 'images/default.png' %}
+         {% endif %}" alt="Profile Picture" class="rounded-circle" width="150" height="150">
+
+    </div>
+</div>
+{% endblock %}

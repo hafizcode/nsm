@@ -1,29 +1,12 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Home Page CSS */
 body {
-    width: 100vw;
-    height: 100vh;
     overflow: hidden;
 }
 
 .home-container {
-    margin: 0;
     height: 100vh;
     width: 100%;
-    background: black;
-    overflow: hidden;
-    background: #C33764;
-    /* fallback colour. Make sure this is just one solid colour. */
-    /* background: -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("https://bit.ly/2rlzaXi"); */
-    /* background: linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), url("https://bit.ly/2rlzaXi"); */
-    background: linear-gradient(rgba(0, 0, 0, 0.8)), url("../images/bg0.jpg");
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('../images/bg1.jpg') no-repeat center center fixed;
     background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }

@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views
-
+from core import views as core_views
 
 urlpatterns = [
-    path('', views.home, name='public_home'),
-    path('resources/', views.public_files, name='public_files'),  # 👈 Add this
+    path('', views.home_view, name='home'),
+    path('resources/', views.public_resources, name='public_resources'),
+    path('login/', core_views.login_view, name='login'),
 ]
