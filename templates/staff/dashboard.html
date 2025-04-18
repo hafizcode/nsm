@@ -1,9 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Staff Dashboard{% endblock %}
 {% block content %}
-<h2>Welcome, {{ request.user.username }}</h2>
 <div class="row">
-    <div class="col-md-4">
+    <div class="container mt-5">
+        <h2>Welcome, {{ request.user.username }} 👋</h2>
+
+        {% if recent_file %}
+        <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+                Most Recent Upload
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ recent_file.title }}</h5>
+                <p class="card-text"><strong>Label:</strong> {{ recent_file.label }}</p>
+                <p class="card-text"><strong>Uploaded on:</strong> {{ recent_file.uploaded_at|date:"F j, Y, g:i a" }}
+                </p>
+                <a href="{{ recent_file.file.url }}" class="btn btn-sm btn-success" download>Download</a>
+            </div>
+        </div>
+        {% else %}
+        <p class="mt-4">You haven't uploaded any files yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4 mt-4">
         <div class="card text-white bg-primary mb-3">
             <div class="card-body">
                 <h5 class="card-title">Files Uploaded</h5>
@@ -11,5 +31,6 @@
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}

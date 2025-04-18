@@ -12,3 +12,6 @@ def public_resources(request):
             Q(category__name__icontains=query)
         )
     return render(request, 'pages/resources.html', {'files': files})
+
+def home_view(request):
+    return render(request, 'home.html')

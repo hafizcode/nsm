@@ -6,6 +6,7 @@ from .models import Profile, UploadedFile, Category
 from .forms import StaffCreationForm, UploadFileForm, CategoryForm, EditStaffForm
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 import os
 
 # Admin Login
@@ -15,18 +16,30 @@ def is_admin(user):
 
 def login_view(request):
     if request.method == 'POST':
-        user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
-        if user:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
             login(request, user)
+
             if user.is_superuser:
-                return redirect('admin_dashboard')
-            return redirect('staff_dashboard')
+                return redirect('admin_dashboard')  # ✅ URL name
+            elif user.is_staff:
+                return redirect('staff_dashboard')  # ✅ URL name
+            else:
+                return redirect('login')  # or handle unauthorized access
+        else:
+            messages.error(request, 'Invalid credentials')
+            return redirect('login')
+
     return render(request, 'login.html')
+
 
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
 # Admin: Manage Staff
 
@@ -81,9 +94,10 @@ def staff_profile(request):
 @login_required
 def staff_dashboard(request):
     files = UploadedFile.objects.filter(uploaded_by=request.user)
+    recent_file = UploadedFile.objects.filter(uploaded_by=request.user).order_by('-uploaded_at').first()
     file_count = files.count()
     return render(request, 'staff/dashboard.html', {
-        'files': files, 'file_count': file_count
+        'files': files, 'file_count': file_count, 'recent_file': recent_file
     })
 
 @login_required
