@@ -2,7 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Profile, UploadedFile, Category
+from .models import Profile, UploadedFile, Category, SubjectGroup
+from django.contrib.auth.decorators import user_passes_test
+from .forms import GroupForm
 from .forms import StaffCreationForm, UploadFileForm, CategoryForm, EditStaffForm
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
@@ -83,6 +85,43 @@ def delete_staff(request, staff_id):
     user = get_object_or_404(User, id=staff_id)
     user.delete()
     return redirect('admin_dashboard')
+
+def admin_required(view_func):
+    return user_passes_test(lambda u: u.is_superuser)(view_func)
+
+def group_list(request):
+    groups = SubjectGroup.objects.all()
+    return render(request, 'pages/group_list.html', {'groups': groups})
+
+@admin_required
+def add_group(request):
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('group_list')
+    else:
+        form = GroupForm()
+    return render(request, 'admin/groups/add_group.html', {'form': form})
+
+@admin_required
+def edit_group(request, group_id):
+    group = get_object_or_404(SubjectGroup, id=group_id)
+    if request.method == 'POST':
+        form = GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect('group_list')
+    else:
+        form = GroupForm(instance=group)
+    return render(request, 'admin/groups/edit_group.html', {'form': form, 'group': group})
+
+@admin_required
+def delete_group(request, group_id):
+    group = get_object_or_404(SubjectGroup, id=group_id)
+    group.delete()
+    return redirect('group_list')
+
 
 # Staff File Management
 
