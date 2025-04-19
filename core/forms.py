@@ -1,12 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UploadedFile, Category, Profile
+from .models import UploadedFile, Category, Profile, SubjectGroup
+
+class GroupForm(forms.ModelForm):
+    class Meta:
+        model = SubjectGroup
+        fields = ['name']
+
 
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadedFile
-        fields = ['title', 'label', 'file', 'category']
+        fields = ['title', 'label', 'file', 'category', 'group']
 
 class CategoryForm(forms.ModelForm):
     class Meta:
