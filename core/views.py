@@ -48,7 +48,8 @@ def logout_view(request):
 @user_passes_test(is_admin)
 def admin_dashboard(request):
     staff_members = User.objects.filter(is_staff=True, is_superuser=False)
-    return render(request, 'admin/dashboard.html', {'staff_members': staff_members})
+    groups = SubjectGroup.objects.all()
+    return render(request, 'admin/dashboard.html', {'staff_members': staff_members, 'groups': groups})
 
 @user_passes_test(is_admin)
 def add_staff(request):
