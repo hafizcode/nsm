@@ -9,6 +9,7 @@ from .forms import StaffCreationForm, UploadFileForm, CategoryForm, EditStaffFor
 from django.http import FileResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
+from django.db.models import Q
 import os
 
 # Admin Login
@@ -47,8 +48,25 @@ def logout_view(request):
 
 @user_passes_test(is_admin)
 def admin_dashboard(request):
+    # staff_members = User.objects.filter(is_staff=True, is_superuser=False)
+    # staff_query = request.GET.get('q', '')
+    # if staff_query:
+    #     staff_members = staff_members.filter()
+
+    staff_query = request.GET.get('q')
     staff_members = User.objects.filter(is_staff=True, is_superuser=False)
+    if staff_query:
+        staff_members = staff_members.filter(
+            Q(username__icontains=staff_query)
+        )
+
+    group_query = request.GET.get('q')
     groups = SubjectGroup.objects.all()
+    if group_query:
+        groups = groups.filter(
+            Q(name__icontains=group_query)
+        )
+
     return render(request, 'admin/dashboard.html', {'staff_members': staff_members, 'groups': groups})
 
 @user_passes_test(is_admin)
@@ -100,7 +118,7 @@ def add_group(request):
         form = GroupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('group_list')
+            return redirect('admin_dashboard')
     else:
         form = GroupForm()
     return render(request, 'admin/groups/add_group.html', {'form': form})
@@ -112,7 +130,7 @@ def edit_group(request, group_id):
         form = GroupForm(request.POST, instance=group)
         if form.is_valid():
             form.save()
-            return redirect('group_list')
+            return redirect('admin_dashboard')
     else:
         form = GroupForm(instance=group)
     return render(request, 'admin/groups/edit_group.html', {'form': form, 'group': group})
@@ -121,7 +139,7 @@ def edit_group(request, group_id):
 def delete_group(request, group_id):
     group = get_object_or_404(SubjectGroup, id=group_id)
     group.delete()
-    return redirect('group_list')
+    return redirect('admin_dashboard')
 
 
 # Staff File Management
