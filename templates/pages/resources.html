@@ -7,13 +7,18 @@
 </form>
 <div class="list-group">
     {% for file in files %}
-        <a href="{{ file.file.url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <div>
+        <div class="d-flex justify-content-between align-items-center mb-2 p-3 mb-2 bg-primary text-white rounded">
             <div>
                 <strong>{{ file.title }}</strong><br>
                 <small>{{ file.label }} | {{ file.category.name }}</small>
             </div>
-            <a href="{% url 'download_file' file.id %}" class="btn btn-success">Download</a>
-        </a>
+            <div class="d-flex flex-column gap-1">
+                <a href="{% url 'download_file' file.id %}" class="btn btn-success">Download</a>
+                <a href="{{ file.file.url }}" target="_blank" class="btn btn-warning">View</a>
+            </div>
+        </div>
+        <div>
     {% empty %}
         <p>No files found.</p>
     {% endfor %}

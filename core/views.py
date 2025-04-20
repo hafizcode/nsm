@@ -240,7 +240,6 @@ def delete_category(request, category_id):
 
 def download_file(request, file_id):
     uploaded_file = get_object_or_404(UploadedFile, id=file_id)
-    uploaded_file.download_count += 1
     uploaded_file.save()
 
     file_path = uploaded_file.file.path
