@@ -3,6 +3,12 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Available Groups</h2>
+    <form method="get" action="" class="mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search groups by name" value="{{ request.GET.q|default:'' }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
     <div class="row">
         {% for group in groups %}
             <div class="col-md-4 mb-3">

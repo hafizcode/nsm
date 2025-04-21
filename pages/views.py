@@ -17,8 +17,12 @@ def home_view(request):
     return render(request, 'home.html')
 
 def group_list_view(request):
-    groups = SubjectGroup.objects.all()  # Correctly reference the model
-    return render(request, 'pages/group_list.html', {'groups': groups})
+    query = request.GET.get('q')
+    groups = SubjectGroup.objects.all() # Use 'groups' as the variable name
+    if query: # Check if the query parameter is present
+        groups = groups.filter(name__icontains=query) # Filter groups based on the query
+    # Use 'icontains' for case-insensitive matching
+    return render(request, 'pages/group_list.html', {'groups': groups, 'query': query})
 
 def group_detail_view(request, group_id):
     group = get_object_or_404(SubjectGroup, id=group_id)  # Use 'group' as the instance name
