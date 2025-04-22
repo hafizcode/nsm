@@ -2,22 +2,27 @@
 {% load static %}
 
 {% block title %}Login{% endblock %}
-{% block content %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block body_class %}overflow{% endblock %}
+{% block main %}
 
-
-<div class="card w-50 mx-auto mt-5 p-4 shadow-sm">
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username" required class="form-control"><br>
-    <input type="password" name="password" placeholder="Password" required class="form-control"><br>
-    <button type="submit" class="btn btn-primary w-100">Login</button>
-  </form>
+<div class="login-container d-flex justify-content-center align-items-center vh-100" data-bs-theme="dark">
+  <div class="card w-25 mx-auto p-4 shadow-sm">
+    <h2 class="text-light mb-4">Login</h2>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Username" required class="form-control"><br>
+      <input type="password" name="password" placeholder="Password" required class="form-control"><br>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+  </div>
 </div>
 
 
 {% for msg in messages %}
-  <p style="color:red">{{ msg }}</p>
+<p style="color:red">{{ msg }}</p>
 {% endfor %}
 
 {% endblock %}

@@ -7,7 +7,7 @@
     <form method="get" class="mb-4">
         <div class="input-group">
             <input type="text" name="q" class="form-control" placeholder="Search by title or label" value="{{ query }}">
-            <button type="submit" class="btn btn-outline-secondary">Search</button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
 
@@ -20,7 +20,10 @@
                         <small class="text-muted">Label: {{ file.label }}</small><br>
                         <small class="text-muted">Category: {{ file.category }}</small>
                     </div>
-                    <a href="{{ file.file.url }}" class="btn btn-success" download>Download</a>
+                    <div>
+                        <a href="{{ file.file.url }}" class="btn btn-success" download>Download</a>
+                        <a href="{{ file.file.url }}" class="btn btn-warning" target="_blank">View</a>
+                    </div>
                 </li>
             {% endfor %}
         </ul>

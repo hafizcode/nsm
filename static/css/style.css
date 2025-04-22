@@ -1,13 +1,35 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f8f9fa;
+:root {
+    --primary-color: #007bff; /* Bootstrap primary color */
+    --secondary-color: #6c757d; /* Bootstrap secondary color */
+    --success-color: #28a745; /* Bootstrap success color */
+    --danger-color: #dc3545; /* Bootstrap danger color */
+    --warning-color: #ffc107; /* Bootstrap warning color */
+    --info-color: #17a2b8; /* Bootstrap info color */
+    --light-color: #f8f9fa; /* Bootstrap light color */
+    --dark-color: #343a40; /* Bootstrap dark color */
+
+    --color-01: #EDC7B7; /* Custom color 1 */
+    --color-02: #EEE2DC; /* Custom color 2 */
+    --color-03: #BAB2B5; /* Custom color 3 */
+    --color-04: #123C69; /* Custom color 4 */
+    --color-05: #AC3B61; /* Custom color 5 */
+
 }
-h2, h3 {
-    color: #343a40;
+
+/* Utility Classes */
+.overflow {
+    overflow: hidden;
 }
-.card {
-    border-radius: 1rem;
+
+/* Login Page CSS */
+.login-overflow {
+    overflow: hidden;
 }
-.card {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+.login-container {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                url('../images/bg1.jpg') no-repeat center center fixed;
+    background-size: cover;
 }

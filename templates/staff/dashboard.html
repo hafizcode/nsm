@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Staff Dashboard{% endblock %}
+{% block body_class %}overflow{% endblock %}
 {% block content %}
 <div class="row">
     <div class="container mt-5">
@@ -7,7 +8,7 @@
 
         {% if recent_file %}
         <div class="card mt-4">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header text-white" style="background-color: rgb(24 63 137);">
                 Most Recent Upload
             </div>
             <div class="card-body">
@@ -16,6 +17,7 @@
                 <p class="card-text"><strong>Uploaded on:</strong> {{ recent_file.uploaded_at|date:"F j, Y, g:i a" }}
                 </p>
                 <a href="{{ recent_file.file.url }}" class="btn btn-sm btn-success" download>Download</a>
+                <a href="{{ recent_file.file.url }}" class="btn btn-sm btn-warning" target="_blank">View</a>
             </div>
         </div>
         {% else %}
@@ -24,7 +26,7 @@
     </div>
 
     <div class="col-md-4 mt-4">
-        <div class="card text-white bg-primary mb-3">
+        <div class="card text-white mb-3" style="background-color: rgb(24 63 137);">
             <div class="card-body">
                 <h5 class="card-title">Files Uploaded</h5>
                 <p class="card-text display-6">{{ file_count }}</p>

@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     {% include 'navbar.html' %}
     {% block main %}
-    <div class="container mt-4 py-5">
+    <div class="container mt-4 py-5" data-bs-theme="dark">
         {% block content %}{% endblock %}
     </div>
     {% endblock %}
