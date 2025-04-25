@@ -1,0 +1,17 @@
+# Ignore Python compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore environment files
+*.env
+
+# Ignore SQLite database files
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Ignore media/uploads (optional)
+media/
+uploads/
