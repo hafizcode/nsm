@@ -15,15 +15,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'manage_groups' %}">Manage Groups</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category_list' %}">Categories</a>
+                    </li>
                   {% endif %}
                   
                   {# Staff-specific links (only show if staff but not admin) #}
                   {% if user.is_staff and not user.is_superuser %}
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'staff_dashboard' %}">Staff Dashboard</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'category_list' %}">Categories</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" href="{% url 'upload_file' %}">Upload File</a>

@@ -221,12 +221,14 @@ def delete_file(request, file_id):
 
 # List all categories
 @login_required
+@user_passes_test(is_admin)
 def category_list(request):
     categories = Category.objects.all()
-    return render(request, 'staff/category_list.html', {'categories': categories})
+    return render(request, 'admin/category_list.html', {'categories': categories})
 
 # Add a new category
 @login_required
+@user_passes_test(is_admin)
 def add_category(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -235,10 +237,11 @@ def add_category(request):
             return redirect('category_list')
     else:
         form = CategoryForm()
-    return render(request, 'staff/add_category.html', {'form': form})
+    return render(request, 'admin/add_category.html', {'form': form})
 
 # Edit a category
 @login_required
+@user_passes_test(is_admin)
 def edit_category(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     if request.method == 'POST':
@@ -248,7 +251,7 @@ def edit_category(request, category_id):
             return redirect('category_list')
     else:
         form = CategoryForm(instance=category)
-    return render(request, 'staff/edit_category.html', {'form': form})
+    return render(request, 'admin/edit_category.html', {'form': form})
 
 # Delete a category
 @login_required
@@ -257,7 +260,7 @@ def delete_category(request, category_id):
     if request.method == 'POST':
         category.delete()
         return redirect('category_list')
-    return render(request, 'staff/delete_category.html', {'category': category})
+    return render(request, 'admin/delete_category.html', {'category': category})
 
 def download_file(request, file_id):
     uploaded_file = get_object_or_404(UploadedFile, id=file_id)
