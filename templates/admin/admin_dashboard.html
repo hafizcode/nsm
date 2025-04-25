@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="my-4">Admin Dashboard</h2>
+    
+    <div class="row">
+        <!-- Staff Overview Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">Staff Members</h5>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-text">{{ staff_count }} Staff Members</h4>
+                    <p class="card-text">Latest addition: {{ latest_staff.username }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'manage_staff' %}" class="btn btn-primary">Manage Staff</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Groups Overview Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">Groups</h5>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-text">{{ group_count }} Groups</h4>
+                    <p class="card-text">Latest group: {{ latest_group.name }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'manage_groups' %}" class="btn btn-success">Manage Groups</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Other dashboard widgets can be added here -->
+</div>
+{% endblock %}
