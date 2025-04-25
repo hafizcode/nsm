@@ -48,26 +48,71 @@ def logout_view(request):
 
 @user_passes_test(is_admin)
 def admin_dashboard(request):
-    # staff_members = User.objects.filter(is_staff=True, is_superuser=False)
-    # staff_query = request.GET.get('q', '')
-    # if staff_query:
-    #     staff_members = staff_members.filter()
+    # Count staff members excluding superusers
+    staff_count = User.objects.filter(is_staff=True, is_superuser=False).count()
+    
+    # Get latest staff member excluding superusers
+    latest_staff = User.objects.filter(is_staff=True, is_superuser=False).order_by('-date_joined').first()
+    
+    group_count = SubjectGroup.objects.count()
+    latest_group = SubjectGroup.objects.order_by('-id').first()
+    
+    context = {
+        'staff_count': staff_count,
+        'latest_staff': latest_staff,
+        'group_count': group_count,
+        'latest_group': latest_group,
+    }
+    return render(request, 'admin/admin_dashboard.html', context)
 
-    staff_query = request.GET.get('q')
+def manage_staff(request):
+    # Get all staff members excluding superusers/admins
     staff_members = User.objects.filter(is_staff=True, is_superuser=False)
-    if staff_query:
-        staff_members = staff_members.filter(
-            Q(username__icontains=staff_query)
-        )
+    
+    if 'q' in request.GET:
+        query = request.GET['q']
+        staff_members = staff_members.filter(username__icontains=query)
+    
+    context = {
+        'staff_members': staff_members,
+    }
+    return render(request, 'admin/manage_staff.html', context)
 
-    group_query = request.GET.get('q')
+
+def manage_groups(request):
     groups = SubjectGroup.objects.all()
-    if group_query:
-        groups = groups.filter(
-            Q(name__icontains=group_query)
-        )
+    if 'q' in request.GET:
+        query = request.GET['q']
+        groups = groups.filter(name__icontains=query)
+    
+    context = {
+        'groups': groups,
+    }
+    return render(request, 'admin/manage_groups.html', context)
 
-    return render(request, 'admin/dashboard.html', {'staff_members': staff_members, 'groups': groups})
+
+# @user_passes_test(is_admin)
+# def admin_dashboard(request):
+#     # staff_members = User.objects.filter(is_staff=True, is_superuser=False)
+#     # staff_query = request.GET.get('q', '')
+#     # if staff_query:
+#     #     staff_members = staff_members.filter()
+
+#     staff_query = request.GET.get('q')
+#     staff_members = User.objects.filter(is_staff=True, is_superuser=False)
+#     if staff_query:
+#         staff_members = staff_members.filter(
+#             Q(username__icontains=staff_query)
+#         )
+
+#     group_query = request.GET.get('q')
+#     groups = SubjectGroup.objects.all()
+#     if group_query:
+#         groups = groups.filter(
+#             Q(name__icontains=group_query)
+#         )
+
+#     return render(request, 'admin/dashboard.html', {'staff_members': staff_members, 'groups': groups})
 
 @user_passes_test(is_admin)
 def add_staff(request):

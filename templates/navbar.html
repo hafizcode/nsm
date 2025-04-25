@@ -6,9 +6,15 @@
               {% if user.is_authenticated %}
                   {# Admin-specific links #}
                   {% if user.is_superuser %}
-                      <li class="nav-item">
-                          <a class="nav-link" href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
-                      </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'manage_staff' %}">Manage Staff</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'manage_groups' %}">Manage Groups</a>
+                    </li>
                   {% endif %}
                   
                   {# Staff-specific links (only show if staff but not admin) #}

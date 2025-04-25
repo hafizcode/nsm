@@ -6,6 +6,10 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
 
     path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('manage-staff/', views.manage_staff, name='manage_staff'),
+    path('manage-groups/', views.manage_groups, name='manage_groups'),
+
+    # path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('admin/staff/add/', views.add_staff, name='add_staff'),
     path('admin/staff/edit/<int:staff_id>/', views.edit_staff, name='edit_staff'),
     path('admin/staff/delete/<int:staff_id>/', views.delete_staff, name='delete_staff'),
