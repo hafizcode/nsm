@@ -1,13 +1,84 @@
 {% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block extra_css %}
+<link href="{% static 'css/upload.css' %}" rel="stylesheet">
+{% endblock %}
+
+
 {% block title %}Edit File{% endblock %}
-{% block content %}
-<div class="container mt-5">
-    <h2>Edit Uploaded File</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Save Changes</button>
-        <a href="{% url 'manage_files' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+
+{% block main %}
+<div class="upload-container text-light" data-bs-theme="dark">
+    <div class="container py-5" style="margin-top: 150px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg rounded-4 p-4">
+                    <h3 class="text-center mb-4">Edit Uploaded File</h3>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-bold">
+                                {{ form.title.label }}
+                            </label>
+                            {{ form.title|add_class:"form-control" }}
+                            {% for error in form.title.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.label.id_for_label }}" class="form-label fw-bold">
+                                {{ form.label.label }}
+                            </label>
+                            {{ form.label|add_class:"form-control" }}
+                            {% for error in form.label.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.file.id_for_label }}" class="form-label fw-bold">
+                                {{ form.file.label }}
+                            </label>
+                            {{ form.file|add_class:"form-control" }}
+                            {% for error in form.file.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                            <small class="text-muted">Current file: {{ object.filename }}</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.category.id_for_label }}" class="form-label fw-bold">
+                                {{ form.category.label }}
+                            </label>
+                            {{ form.category|add_class:"form-select" }}
+                            {% for error in form.category.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.group.id_for_label }}" class="form-label fw-bold">
+                                {{ form.group.label }}
+                            </label>
+                            {{ form.group|add_class:"form-select" }}
+                            {% for error in form.group.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success px-4">Save Changes</button>
+                            <a href="{% url 'manage_files' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

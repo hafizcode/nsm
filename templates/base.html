@@ -9,7 +9,9 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}">
+    {% block show_navbar %}
     {% include 'navbar.html' %}
+    {% endblock %}
     {% block main %}
     <div class="container mt-4 py-5" data-bs-theme="dark">
         {% block content %}{% endblock %}
