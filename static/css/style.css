@@ -1,18 +1,31 @@
 :root {
-    --primary-color: #007bff; /* Bootstrap primary color */
-    --secondary-color: #6c757d; /* Bootstrap secondary color */
-    --success-color: #28a745; /* Bootstrap success color */
-    --danger-color: #dc3545; /* Bootstrap danger color */
-    --warning-color: #ffc107; /* Bootstrap warning color */
-    --info-color: #17a2b8; /* Bootstrap info color */
-    --light-color: #f8f9fa; /* Bootstrap light color */
-    --dark-color: #343a40; /* Bootstrap dark color */
+    --primary-color: #007bff;
+    /* Bootstrap primary color */
+    --secondary-color: #6c757d;
+    /* Bootstrap secondary color */
+    --success-color: #28a745;
+    /* Bootstrap success color */
+    --danger-color: #dc3545;
+    /* Bootstrap danger color */
+    --warning-color: #ffc107;
+    /* Bootstrap warning color */
+    --info-color: #17a2b8;
+    /* Bootstrap info color */
+    --light-color: #f8f9fa;
+    /* Bootstrap light color */
+    --dark-color: #343a40;
+    /* Bootstrap dark color */
 
-    --color-01: #EDC7B7; /* Custom color 1 */
-    --color-02: #EEE2DC; /* Custom color 2 */
-    --color-03: #BAB2B5; /* Custom color 3 */
-    --color-04: #123C69; /* Custom color 4 */
-    --color-05: #AC3B61; /* Custom color 5 */
+    --color-01: #EDC7B7;
+    /* Custom color 1 */
+    --color-02: #EEE2DC;
+    /* Custom color 2 */
+    --color-03: #BAB2B5;
+    /* Custom color 3 */
+    --color-04: #123C69;
+    /* Custom color 4 */
+    --color-05: #AC3B61;
+    /* Custom color 5 */
 
 }
 
@@ -29,7 +42,6 @@
 .login-container {
     height: 100vh;
     width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                url('../images/bg1.jpg') no-repeat center center fixed;
+    background: radial-gradient(circle at top right, rgb(36, 9, 119) 0%, rgb(36, 9, 119) 48%, rgb(72, 7, 149) 48%, rgb(72, 7, 149) 53%, rgb(109, 5, 178) 53%, rgb(109, 5, 178) 56%, rgb(145, 2, 208) 56%, rgb(145, 2, 208) 69%, rgb(181, 0, 237) 69%, rgb(181, 0, 237) 100%);;
     background-size: cover;
 }
