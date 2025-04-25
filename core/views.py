@@ -90,30 +90,6 @@ def manage_groups(request):
     }
     return render(request, 'admin/manage_groups.html', context)
 
-
-# @user_passes_test(is_admin)
-# def admin_dashboard(request):
-#     # staff_members = User.objects.filter(is_staff=True, is_superuser=False)
-#     # staff_query = request.GET.get('q', '')
-#     # if staff_query:
-#     #     staff_members = staff_members.filter()
-
-#     staff_query = request.GET.get('q')
-#     staff_members = User.objects.filter(is_staff=True, is_superuser=False)
-#     if staff_query:
-#         staff_members = staff_members.filter(
-#             Q(username__icontains=staff_query)
-#         )
-
-#     group_query = request.GET.get('q')
-#     groups = SubjectGroup.objects.all()
-#     if group_query:
-#         groups = groups.filter(
-#             Q(name__icontains=group_query)
-#         )
-
-#     return render(request, 'admin/dashboard.html', {'staff_members': staff_members, 'groups': groups})
-
 @user_passes_test(is_admin)
 def add_staff(request):
     if request.method == 'POST':
